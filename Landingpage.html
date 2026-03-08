@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ExpressVPN · The VPN that just works</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+        }
+
+        body {
+            background-color: #ffffff;
+            color: #1a2b3e;
+            line-height: 1.5;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* Header/Navigation */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+            border-bottom: 1px solid #eef2f6;
+            flex-wrap: wrap;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 700;
+            color: #1a4870;
+            letter-spacing: -0.5px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 32px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #2c3e50;
+            font-weight: 500;
+        }
+
+        .nav-links a:hover {
+            color: #1e6ec7;
+        }
+
+        /* Hero Section */
+        .hero {
+            text-align: center;
+            padding: 60px 0 40px;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            color: #0a2647;
+            margin-bottom: 16px;
+            line-height: 1.2;
+        }
+
+        .hero .subhead {
+            font-size: 1.5rem;
+            color: #34495e;
+            margin-bottom: 32px;
+        }
+
+        .hero .subhead i {
+            font-style: italic;
+            color: #1e6ec7;
+        }
+
+        .btn-primary {
+            background-color: #1e6ec7;
+            color: white;
+            border: none;
+            font-size: 1.2rem;
+            font-weight: 600;
+            padding: 16px 48px;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(30,110,199,0.3);
+            transition: background-color 0.2s;
+            display: inline-block;
+            text-decoration: none;
+        }
+
+        .btn-primary:hover {
+            background-color: #1557a0;
+        }
+
+        /* Features Grid */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin: 60px 0;
+        }
+
+        .feature-card {
+            padding: 24px;
+            border-radius: 16px;
+            background: #f8fafd;
+            border: 1px solid #e6ecf3;
+        }
+
+        .feature-card h3 {
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: #0a2647;
+            margin-bottom: 16px;
+        }
+
+        .feature-card p {
+            color: #4a5568;
+            margin-bottom: 24px;
+            font-size: 1rem;
+        }
+
+        .feature-link {
+            color: #1e6ec7;
+            text-decoration: none;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .card-footer {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid #d0ddee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .btn-outline {
+            border: 2px solid #1e6ec7;
+            color: #1e6ec7;
+            background: transparent;
+            padding: 8px 20px;
+            border-radius: 30px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            cursor: default;
+        }
+
+        /* Device Showcase */
+        .device-section {
+            background: #f0f7ff;
+            border-radius: 40px;
+            padding: 40px;
+            margin: 40px 0;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .device-text h2 {
+            font-size: 2rem;
+            color: #0a2647;
+            margin-bottom: 8px;
+        }
+
+        .device-text p {
+            font-size: 1.1rem;
+            color: #2c3e50;
+        }
+
+        .device-icons {
+            display: flex;
+            gap: 20px;
+            font-size: 2rem;
+            color: #1e6ec7;
+        }
+
+        /* Advantages Row */
+        .advantages-row {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin: 60px 0;
+        }
+
+        .advantage-item {
+            padding: 32px;
+            background: white;
+            border-radius: 24px;
+            border: 1px solid #e2eaf2;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.02);
+        }
+
+        .advantage-icon {
+            font-size: 2.5rem;
+            margin-bottom: 24px;
+            color: #1e6ec7;
+        }
+
+        .advantage-item h4 {
+            font-size: 1.5rem;
+            color: #0a2647;
+            margin-bottom: 12px;
+        }
+
+        .advantage-item p {
+            color: #4a5568;
+            margin-bottom: 20px;
+        }
+
+        .see-more {
+            color: #1e6ec7;
+            text-decoration: none;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        /* Global Stats */
+        .global-stats {
+            background: linear-gradient(135deg, #0a2647, #1a4870);
+            color: white;
+            padding: 48px;
+            border-radius: 40px;
+            margin: 60px 0;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .stats-left h2 {
+            font-size: 2.2rem;
+            margin-bottom: 24px;
+        }
+
+        .stats-numbers {
+            display: flex;
+            gap: 48px;
+            flex-wrap: wrap;
+        }
+
+        .stat-item .big-number {
+            font-size: 3rem;
+            font-weight: 700;
+            color: #ffd966;
+            line-height: 1;
+        }
+
+        .stat-item .label {
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+            opacity: 0.9;
+        }
+
+        .unlimited-badge {
+            background: #ffd966;
+            color: #0a2647;
+            padding: 12px 28px;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1.2rem;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            text-align: center;
+            margin: 40px 0;
+        }
+
+        /* Footer */
+        .footer {
+            border-top: 1px solid #e2eaf2;
+            padding: 40px 0;
+            margin-top: 40px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 32px;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: #2c3e50;
+            text-decoration: none;
+        }
+
+        .footer-links a:hover {
+            color: #1e6ec7;
+        }
+
+        .copyright {
+            color: #6c7a8d;
+        }
+
+        /* Responsive */
+        @media (max-width: 900px) {
+            .hero h1 { font-size: 2.5rem; }
+            .features-grid { grid-template-columns: 1fr; }
+            .advantages-row { grid-template-columns: 1fr; }
+            .header { flex-direction: column; gap: 16px; }
+            .nav-links { flex-wrap: wrap; justify-content: center; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <div class="logo">ExpressVPN</div>
+            <div class="nav-links">
+                <a href="#">What is a VPN?</a>
+                <a href="#">Apps</a>
+                <a href="#">Servers</a>
+                <a href="#">Support</a>
+            </div>
+        </div>
+
+        <!-- Hero Section -->
+        <div class="hero">
+            <h1>The VPN that just works</h1>
+            <div class="subhead"><i>Go further</i> with the #1 trusted leader in VPN</div>
+            <a href="#" class="btn-primary">Get ExpressVPN →</a>
+        </div>
+
+        <!-- Features Grid - 3 columns -->
+        <div class="features-grid">
+            <!-- Secure access -->
+            <div class="feature-card">
+                <h3>Secure access, worldwide</h3>
+                <p>Connect reliably from anywhere, to anywhere. Our network of high-speed servers across 94 countries puts you in control.</p>
+                <a href="#" class="feature-link">Get ExpressVPN →</a>
+            </div>
+
+            <!-- One click -->
+            <div class="feature-card">
+                <h3>One click to a safer internet</h3>
+                <p>Going online doesn't have to mean being exposed. Keep your personal information more private and secure.</p>
+                <div class="card-footer">
+                    <a href="#" class="feature-link">See all apps →</a>
+                    <span class="btn-outline">Apps</span>
+                </div>
+            </div>
+
+            <!-- Every device -->
+            <div class="feature-card">
+                <h3>Use ExpressVPN on every device</h3>
+                <p>Phone, tablet, computer, router—no matter where you are, a single subscription has got you covered.</p>
+                <div class="card-footer">
+                    <a href="#" class="feature-link">See all apps →</a>
+                    <span class="btn-outline">Get ExpressVPN →</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Device Showcase (additional) -->
+        <div class="device-section">
+            <div class="device-text">
+                <h2>One subscription for all your devices</h2>
+                <p>Phone, tablet, computer, router — all included</p>
+            </div>
+            <div class="device-icons">
+                <span>📱</span>
+                <span>💻</span>
+                <span>📲</span>
+                <span>🖥️</span>
+            </div>
+        </div>
+
+        <!-- Advantages Row - 3 columns -->
+        <div class="advantages-row">
+            <!-- Stronger data protection -->
+            <div class="advantage-item">
+                <div class="advantage-icon">🛡️</div>
+                <h4>Stronger data protection</h4>
+                <p>Take charge of your online privacy and security with best-in-class encryption.</p>
+                <a href="#" class="see-more">See more advantages →</a>
+            </div>
+
+            <!-- Works seamlessly -->
+            <div class="advantage-item">
+                <div class="advantage-icon">🌐</div>
+                <h4>Works seamlessly everywhere</h4>
+                <p>Experience the internet the way it's meant to be. On the go, or on your couch.</p>
+                <a href="#" class="see-more">See more advantages →</a>
+            </div>
+
+            <!-- Lightning quick -->
+            <div class="advantage-item">
+                <div class="advantage-icon">⚡</div>
+                <h4>Lightning-quick connectivity</h4>
+                <p>Our VPN network is built for speed, powered by next-generation technology.</p>
+                <a href="#" class="see-more">See more advantages →</a>
+            </div>
+        </div>
+
+        <!-- Global Stats -->
+        <div class="global-stats">
+            <div class="stats-left">
+                <h2>Ultra-fast servers around the globe</h2>
+                <div class="stats-numbers">
+                    <div class="stat-item">
+                        <div class="big-number">160</div>
+                        <div class="label">locations</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="big-number">94</div>
+                        <div class="label">countries</div>
+                    </div>
+                    <div class="unlimited-badge">
+                        3 unlimited bandwidth
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Final CTA -->
+        <div class="cta-section">
+            <a href="#" class="btn-primary">Get ExpressVPN →</a>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <div class="footer-links">
+                <a href="#">See all apps →</a>
+                <a href="#">See more advantages →</a>
+                <a href="#">Locations</a>
+                <a href="#">Help</a>
+            </div>
+            <div class="copyright">
+                © 2025 ExpressVPN · Leading privacy protection
+            </div>
+        </div>
+    </div>
+</body>
+</html>
