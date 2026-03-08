@@ -1,0 +1,1166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pizza Craft - Full Stack Pizza Ordering System</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Auth Forms */
+        .auth-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .auth-box {
+            background: white;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            width: 100%;
+            max-width: 400px;
+        }
+
+        .auth-box h2 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #764ba2;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            color: #555;
+            font-weight: 500;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #e0e0e0;
+            border-radius: 5px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #764ba2;
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            width: 100%;
+            transition: transform 0.3s;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: #6c757d;
+        }
+
+        .link {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .link a {
+            color: #764ba2;
+            text-decoration: none;
+        }
+
+        /* Dashboard */
+        .dashboard {
+            display: none;
+        }
+
+        .navbar {
+            background: white;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .nav-links a {
+            margin-left: 20px;
+            text-decoration: none;
+            color: #764ba2;
+            font-weight: 500;
+            cursor: pointer;
+        }
+
+        .content {
+            padding: 30px;
+        }
+
+        /* Pizza Builder */
+        .pizza-builder {
+            background: white;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+
+        .step-indicator {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 30px;
+            position: relative;
+        }
+
+        .step {
+            flex: 1;
+            text-align: center;
+            padding: 10px;
+            background: #f8f9fa;
+            margin: 0 5px;
+            border-radius: 5px;
+            font-weight: 500;
+        }
+
+        .step.active {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .options-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .option-card {
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 15px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .option-card:hover {
+            border-color: #764ba2;
+            transform: translateY(-2px);
+        }
+
+        .option-card.selected {
+            border-color: #764ba2;
+            background: #f3e5ff;
+        }
+
+        .option-card input[type="checkbox"] {
+            margin-right: 5px;
+        }
+
+        /* Admin Inventory */
+        .inventory-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .inventory-card {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .inventory-card h3 {
+            color: #764ba2;
+            margin-bottom: 15px;
+        }
+
+        .inventory-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 0;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .inventory-item.low-stock {
+            color: #dc3545;
+            font-weight: bold;
+        }
+
+        .threshold-badge {
+            background: #ffc107;
+            color: #333;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 12px;
+            margin-left: 10px;
+        }
+
+        /* Orders */
+        .orders-list {
+            display: grid;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .order-card {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .order-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .order-status {
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .status-received { background: #ffc107; color: #333; }
+        .status-kitchen { background: #17a2b8; color: white; }
+        .status-delivery { background: #28a745; color: white; }
+
+        .status-select {
+            padding: 5px;
+            border-radius: 5px;
+            border: 1px solid #e0e0e0;
+        }
+
+        /* Notification */
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 15px 20px;
+            background: white;
+            border-radius: 5px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+            display: none;
+            z-index: 1000;
+            border-left: 4px solid #28a745;
+        }
+
+        .notification.error {
+            border-left-color: #dc3545;
+        }
+
+        /* Loading Spinner */
+        .spinner {
+            display: none;
+            text-align: center;
+            padding: 50px;
+        }
+
+        .spinner::after {
+            content: '';
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #764ba2;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <!-- Notification -->
+    <div id="notification" class="notification"></div>
+
+    <!-- Auth Container -->
+    <div id="authContainer" class="auth-container">
+        <!-- Login Form -->
+        <div id="loginForm" class="auth-box">
+            <h2>Login to Pizza Craft</h2>
+            <form onsubmit="handleLogin(event)">
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" id="loginEmail" required>
+                </div>
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" id="loginPassword" required>
+                </div>
+                <button type="submit" class="btn">Login</button>
+                <div class="link">
+                    <a href="#" onclick="showRegister()">Don't have an account? Register</a><br>
+                    <a href="#" onclick="showForgotPassword()">Forgot Password?</a>
+                </div>
+            </form>
+        </div>
+
+        <!-- Register Form (Hidden by default) -->
+        <div id="registerForm" class="auth-box" style="display: none;">
+            <h2>Register</h2>
+            <form onsubmit="handleRegister(event)">
+                <div class="form-group">
+                    <label>Name</label>
+                    <input type="text" id="regName" required>
+                </div>
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" id="regEmail" required>
+                </div>
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" id="regPassword" required>
+                </div>
+                <div class="form-group">
+                    <label>Confirm Password</label>
+                    <input type="password" id="regConfirmPassword" required>
+                </div>
+                <div class="form-group">
+                    <label>Role</label>
+                    <select id="regRole">
+                        <option value="user">User</option>
+                        <option value="admin">Admin</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn">Register</button>
+                <div class="link">
+                    <a href="#" onclick="showLogin()">Already have an account? Login</a>
+                </div>
+            </form>
+        </div>
+
+        <!-- Forgot Password Form -->
+        <div id="forgotPasswordForm" class="auth-box" style="display: none;">
+            <h2>Forgot Password</h2>
+            <form onsubmit="handleForgotPassword(event)">
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" id="forgotEmail" required>
+                </div>
+                <button type="submit" class="btn">Send Reset Link</button>
+                <div class="link">
+                    <a href="#" onclick="showLogin()">Back to Login</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Dashboard -->
+    <div id="dashboard" class="dashboard">
+        <div class="navbar">
+            <h2>🍕 Pizza Craft</h2>
+            <div class="nav-links">
+                <a id="userViewLink" onclick="showUserDashboard()">Dashboard</a>
+                <a id="adminViewLink" onclick="showAdminDashboard()" style="display: none;">Admin Panel</a>
+                <a onclick="logout()">Logout</a>
+            </div>
+        </div>
+
+        <div class="content">
+            <!-- User Dashboard -->
+            <div id="userDashboard">
+                <h1>Welcome, <span id="userName"></span>!</h1>
+                
+                <!-- Pizza Builder -->
+                <div class="pizza-builder">
+                    <h2>Build Your Custom Pizza</h2>
+                    
+                    <!-- Step Indicator -->
+                    <div class="step-indicator">
+                        <div class="step active" id="step1">1. Choose Base</div>
+                        <div class="step" id="step2">2. Choose Sauce</div>
+                        <div class="step" id="step3">3. Choose Cheese</div>
+                        <div class="step" id="step4">4. Add Veggies</div>
+                        <div class="step" id="step5">5. Payment</div>
+                    </div>
+
+                    <!-- Step 1: Pizza Base -->
+                    <div id="step1Content" class="step-content">
+                        <h3>Choose Your Pizza Base</h3>
+                        <div class="options-grid" id="baseOptions"></div>
+                        <button class="btn" onclick="nextStep(1)">Next</button>
+                    </div>
+
+                    <!-- Step 2: Sauce -->
+                    <div id="step2Content" class="step-content" style="display: none;">
+                        <h3>Choose Your Sauce</h3>
+                        <div class="options-grid" id="sauceOptions"></div>
+                        <button class="btn" onclick="prevStep(2)">Previous</button>
+                        <button class="btn" onclick="nextStep(2)">Next</button>
+                    </div>
+
+                    <!-- Step 3: Cheese -->
+                    <div id="step3Content" class="step-content" style="display: none;">
+                        <h3>Choose Your Cheese</h3>
+                        <div class="options-grid" id="cheeseOptions"></div>
+                        <button class="btn" onclick="prevStep(3)">Previous</button>
+                        <button class="btn" onclick="nextStep(3)">Next</button>
+                    </div>
+
+                    <!-- Step 4: Veggies -->
+                    <div id="step4Content" class="step-content" style="display: none;">
+                        <h3>Select Veggies (Multiple)</h3>
+                        <div class="options-grid" id="veggieOptions"></div>
+                        <button class="btn" onclick="prevStep(4)">Previous</button>
+                        <button class="btn" onclick="nextStep(4)">Next</button>
+                    </div>
+
+                    <!-- Step 5: Payment -->
+                    <div id="step5Content" class="step-content" style="display: none;">
+                        <h3>Order Summary</h3>
+                        <div id="orderSummary"></div>
+                        <button class="btn" onclick="prevStep(5)">Previous</button>
+                        <button class="btn" onclick="processPayment()">Pay with Razorpay</button>
+                    </div>
+                </div>
+
+                <!-- User Orders -->
+                <h2 style="margin-top: 30px;">Your Orders</h2>
+                <div id="userOrders" class="orders-list"></div>
+            </div>
+
+            <!-- Admin Dashboard -->
+            <div id="adminDashboard" style="display: none;">
+                <h1>Admin Panel</h1>
+                
+                <!-- Inventory Management -->
+                <h2>Inventory Management</h2>
+                <div class="inventory-grid" id="inventoryGrid"></div>
+
+                <!-- Orders Management -->
+                <h2 style="margin-top: 30px;">Manage Orders</h2>
+                <div id="adminOrders" class="orders-list"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Email Verification Modal -->
+    <div id="emailVerificationModal" style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: white; padding: 30px; border-radius: 10px; box-shadow: 0 10px 40px rgba(0,0,0,0.2); z-index: 2000;">
+        <h3>Email Verification</h3>
+        <p>Please check your email for verification code.</p>
+        <div class="form-group">
+            <label>Verification Code</label>
+            <input type="text" id="verificationCode" placeholder="Enter 6-digit code">
+        </div>
+        <button class="btn" onclick="verifyEmail()">Verify</button>
+    </div>
+
+    <script>
+        // Mock Database (In real app, this would be MongoDB)
+        let users = JSON.parse(localStorage.getItem('users')) || [
+            {
+                id: 1,
+                name: 'Admin User',
+                email: 'admin@pizzacraft.com',
+                password: 'admin123',
+                role: 'admin',
+                verified: true
+            }
+        ];
+
+        let inventory = JSON.parse(localStorage.getItem('inventory')) || {
+            bases: [
+                { id: 1, name: 'Thin Crust', stock: 50, threshold: 20 },
+                { id: 2, name: 'Thick Crust', stock: 45, threshold: 20 },
+                { id: 3, name: 'Stuffed Crust', stock: 40, threshold: 20 },
+                { id: 4, name: 'Gluten-Free', stock: 30, threshold: 15 },
+                { id: 5, name: 'Whole Wheat', stock: 35, threshold: 15 }
+            ],
+            sauces: [
+                { id: 1, name: 'Tomato', stock: 60, threshold: 25 },
+                { id: 2, name: 'Pesto', stock: 40, threshold: 20 },
+                { id: 3, name: 'BBQ', stock: 45, threshold: 20 },
+                { id: 4, name: 'Alfredo', stock: 35, threshold: 15 },
+                { id: 5, name: 'Spicy Arrabbiata', stock: 30, threshold: 15 }
+            ],
+            cheeses: [
+                { id: 1, name: 'Mozzarella', stock: 70, threshold: 30 },
+                { id: 2, name: 'Cheddar', stock: 45, threshold: 20 },
+                { id: 3, name: 'Parmesan', stock: 40, threshold: 20 },
+                { id: 4, name: 'Gouda', stock: 35, threshold: 15 },
+                { id: 5, name: 'Vegan Cheese', stock: 25, threshold: 10 }
+            ],
+            veggies: [
+                { id: 1, name: 'Bell Peppers', stock: 50, threshold: 20 },
+                { id: 2, name: 'Onions', stock: 60, threshold: 25 },
+                { id: 3, name: 'Mushrooms', stock: 45, threshold: 20 },
+                { id: 4, name: 'Olives', stock: 55, threshold: 20 },
+                { id: 5, name: 'Spinach', stock: 40, threshold: 15 },
+                { id: 6, name: 'Tomatoes', stock: 65, threshold: 25 },
+                { id: 7, name: 'Jalapenos', stock: 35, threshold: 15 },
+                { id: 8, name: 'Corn', stock: 45, threshold: 20 }
+            ]
+        };
+
+        let orders = JSON.parse(localStorage.getItem('orders')) || [];
+
+        let currentUser = null;
+        let currentStep = 1;
+        let pizzaOrder = {
+            base: null,
+            sauce: null,
+            cheese: null,
+            veggies: []
+        };
+
+        // Save to localStorage
+        function saveToLocalStorage() {
+            localStorage.setItem('users', JSON.stringify(users));
+            localStorage.setItem('inventory', JSON.stringify(inventory));
+            localStorage.setItem('orders', JSON.stringify(orders));
+        }
+
+        // Check low stock and send notification
+        function checkLowStock() {
+            let lowStockItems = [];
+            
+            Object.keys(inventory).forEach(category => {
+                inventory[category].forEach(item => {
+                    if (item.stock <= item.threshold) {
+                        lowStockItems.push(`${item.name} (${item.stock} remaining)`);
+                    }
+                });
+            });
+
+            if (lowStockItems.length > 0) {
+                // In real app, this would send an email
+                console.log('Low Stock Alert:', lowStockItems);
+                showNotification(`Low Stock Alert: ${lowStockItems.join(', ')}`, 'warning');
+                
+                // Simulate email notification
+                setTimeout(() => {
+                    alert(`[EMAIL SIMULATION] Low stock notification sent to admin@pizzacraft.com\n\nLow Stock Items:\n${lowStockItems.join('\n')}`);
+                }, 1000);
+            }
+        }
+
+        // Show notification
+        function showNotification(message, type = 'success') {
+            const notification = document.getElementById('notification');
+            notification.textContent = message;
+            notification.className = `notification ${type}`;
+            notification.style.display = 'block';
+            
+            setTimeout(() => {
+                notification.style.display = 'none';
+            }, 3000);
+        }
+
+        // Auth Functions
+        function showLogin() {
+            document.getElementById('loginForm').style.display = 'block';
+            document.getElementById('registerForm').style.display = 'none';
+            document.getElementById('forgotPasswordForm').style.display = 'none';
+        }
+
+        function showRegister() {
+            document.getElementById('loginForm').style.display = 'none';
+            document.getElementById('registerForm').style.display = 'block';
+            document.getElementById('forgotPasswordForm').style.display = 'none';
+        }
+
+        function showForgotPassword() {
+            document.getElementById('loginForm').style.display = 'none';
+            document.getElementById('registerForm').style.display = 'none';
+            document.getElementById('forgotPasswordForm').style.display = 'block';
+        }
+
+        function handleRegister(event) {
+            event.preventDefault();
+            
+            const name = document.getElementById('regName').value;
+            const email = document.getElementById('regEmail').value;
+            const password = document.getElementById('regPassword').value;
+            const confirmPassword = document.getElementById('regConfirmPassword').value;
+            const role = document.getElementById('regRole').value;
+
+            if (password !== confirmPassword) {
+                showNotification('Passwords do not match!', 'error');
+                return;
+            }
+
+            // Check if user exists
+            if (users.find(u => u.email === email)) {
+                showNotification('User already exists!', 'error');
+                return;
+            }
+
+            // Create new user
+            const newUser = {
+                id: users.length + 1,
+                name,
+                email,
+                password,
+                role,
+                verified: false
+            };
+
+            users.push(newUser);
+            saveToLocalStorage();
+
+            // Show verification modal
+            document.getElementById('emailVerificationModal').style.display = 'block';
+            
+            // Simulate sending verification email
+            const verificationCode = Math.floor(100000 + Math.random() * 900000);
+            localStorage.setItem('verificationCode', verificationCode);
+            localStorage.setItem('verifyingEmail', email);
+            
+            alert(`[EMAIL SIMULATION] Your verification code is: ${verificationCode}`);
+            
+            showNotification('Registration successful! Please verify your email.');
+        }
+
+        function verifyEmail() {
+            const code = document.getElementById('verificationCode').value;
+            const storedCode = localStorage.getItem('verificationCode');
+            const email = localStorage.getItem('verifyingEmail');
+
+            if (code === storedCode) {
+                const user = users.find(u => u.email === email);
+                if (user) {
+                    user.verified = true;
+                    saveToLocalStorage();
+                    
+                    document.getElementById('emailVerificationModal').style.display = 'none';
+                    showNotification('Email verified successfully! Please login.');
+                    showLogin();
+                }
+            } else {
+                showNotification('Invalid verification code!', 'error');
+            }
+        }
+
+        function handleLogin(event) {
+            event.preventDefault();
+            
+            const email = document.getElementById('loginEmail').value;
+            const password = document.getElementById('loginPassword').value;
+
+            const user = users.find(u => u.email === email && u.password === password);
+
+            if (user) {
+                if (!user.verified) {
+                    showNotification('Please verify your email first!', 'error');
+                    return;
+                }
+
+                currentUser = user;
+                document.getElementById('authContainer').style.display = 'none';
+                document.getElementById('dashboard').style.display = 'block';
+                document.getElementById('userName').textContent = user.name;
+
+                if (user.role === 'admin') {
+                    document.getElementById('adminViewLink').style.display = 'inline';
+                    showAdminDashboard();
+                } else {
+                    document.getElementById('adminViewLink').style.display = 'none';
+                    showUserDashboard();
+                }
+
+                showNotification(`Welcome back, ${user.name}!`);
+                loadUserOrders();
+                loadInventory();
+                loadAdminOrders();
+                loadPizzaOptions();
+            } else {
+                showNotification('Invalid email or password!', 'error');
+            }
+        }
+
+        function handleForgotPassword(event) {
+            event.preventDefault();
+            
+            const email = document.getElementById('forgotEmail').value;
+            const user = users.find(u => u.email === email);
+
+            if (user) {
+                // Generate reset token
+                const resetToken = Math.random().toString(36).substring(7);
+                localStorage.setItem('resetToken', resetToken);
+                localStorage.setItem('resetEmail', email);
+                
+                alert(`[EMAIL SIMULATION] Password reset link: http://example.com/reset?token=${resetToken}`);
+                showNotification('Password reset link sent to your email!');
+                showLogin();
+            } else {
+                showNotification('Email not found!', 'error');
+            }
+        }
+
+        function logout() {
+            currentUser = null;
+            document.getElementById('authContainer').style.display = 'flex';
+            document.getElementById('dashboard').style.display = 'none';
+            document.getElementById('loginForm').style.display = 'block';
+            document.getElementById('registerForm').style.display = 'none';
+            document.getElementById('forgotPasswordForm').style.display = 'none';
+        }
+
+        // Dashboard Views
+        function showUserDashboard() {
+            document.getElementById('userDashboard').style.display = 'block';
+            document.getElementById('adminDashboard').style.display = 'none';
+        }
+
+        function showAdminDashboard() {
+            if (currentUser && currentUser.role === 'admin') {
+                document.getElementById('userDashboard').style.display = 'none';
+                document.getElementById('adminDashboard').style.display = 'block';
+                loadInventory();
+                loadAdminOrders();
+            }
+        }
+
+        // Pizza Builder Functions
+        function loadPizzaOptions() {
+            // Load bases
+            const baseOptions = document.getElementById('baseOptions');
+            baseOptions.innerHTML = '';
+            inventory.bases.forEach(base => {
+                const div = document.createElement('div');
+                div.className = `option-card ${pizzaOrder.base?.id === base.id ? 'selected' : ''}`;
+                div.innerHTML = `
+                    <h4>${base.name}</h4>
+                    <p>Stock: ${base.stock}</p>
+                `;
+                div.onclick = () => selectBase(base);
+                baseOptions.appendChild(div);
+            });
+
+            // Load sauces
+            const sauceOptions = document.getElementById('sauceOptions');
+            sauceOptions.innerHTML = '';
+            inventory.sauces.forEach(sauce => {
+                const div = document.createElement('div');
+                div.className = `option-card ${pizzaOrder.sauce?.id === sauce.id ? 'selected' : ''}`;
+                div.innerHTML = `
+                    <h4>${sauce.name}</h4>
+                    <p>Stock: ${sauce.stock}</p>
+                `;
+                div.onclick = () => selectSauce(sauce);
+                sauceOptions.appendChild(div);
+            });
+
+            // Load cheeses
+            const cheeseOptions = document.getElementById('cheeseOptions');
+            cheeseOptions.innerHTML = '';
+            inventory.cheeses.forEach(cheese => {
+                const div = document.createElement('div');
+                div.className = `option-card ${pizzaOrder.cheese?.id === cheese.id ? 'selected' : ''}`;
+                div.innerHTML = `
+                    <h4>${cheese.name}</h4>
+                    <p>Stock: ${cheese.stock}</p>
+                `;
+                div.onclick = () => selectCheese(cheese);
+                cheeseOptions.appendChild(div);
+            });
+
+            // Load veggies
+            const veggieOptions = document.getElementById('veggieOptions');
+            veggieOptions.innerHTML = '';
+            inventory.veggies.forEach(veggie => {
+                const div = document.createElement('div');
+                div.className = `option-card ${pizzaOrder.veggies.some(v => v.id === veggie.id) ? 'selected' : ''}`;
+                div.innerHTML = `
+                    <input type="checkbox" ${pizzaOrder.veggies.some(v => v.id === veggie.id) ? 'checked' : ''}>
+                    <h4>${veggie.name}</h4>
+                    <p>Stock: ${veggie.stock}</p>
+                `;
+                div.onclick = (e) => {
+                    if (e.target.type !== 'checkbox') {
+                        const checkbox = div.querySelector('input');
+                        checkbox.checked = !checkbox.checked;
+                        toggleVeggie(veggie, checkbox.checked);
+                    }
+                };
+                veggieOptions.appendChild(div);
+            });
+        }
+
+        function selectBase(base) {
+            if (base.stock <= 0) {
+                showNotification('This base is out of stock!', 'error');
+                return;
+            }
+            pizzaOrder.base = base;
+            loadPizzaOptions();
+        }
+
+        function selectSauce(sauce) {
+            if (sauce.stock <= 0) {
+                showNotification('This sauce is out of stock!', 'error');
+                return;
+            }
+            pizzaOrder.sauce = sauce;
+            loadPizzaOptions();
+        }
+
+        function selectCheese(cheese) {
+            if (cheese.stock <= 0) {
+                showNotification('This cheese is out of stock!', 'error');
+                return;
+            }
+            pizzaOrder.cheese = cheese;
+            loadPizzaOptions();
+        }
+
+        function toggleVeggie(veggie, checked) {
+            if (checked) {
+                if (veggie.stock <= 0) {
+                    showNotification('This veggie is out of stock!', 'error');
+                    return;
+                }
+                pizzaOrder.veggies.push(veggie);
+            } else {
+                pizzaOrder.veggies = pizzaOrder.veggies.filter(v => v.id !== veggie.id);
+            }
+        }
+
+        function nextStep(step) {
+            // Validate current step
+            if (step === 1 && !pizzaOrder.base) {
+                showNotification('Please select a pizza base!', 'error');
+                return;
+            }
+            if (step === 2 && !pizzaOrder.sauce) {
+                showNotification('Please select a sauce!', 'error');
+                return;
+            }
+            if (step === 3 && !pizzaOrder.cheese) {
+                showNotification('Please select a cheese type!', 'error');
+                return;
+            }
+
+            // Hide current step
+            document.getElementById(`step${step}Content`).style.display = 'none';
+            document.getElementById(`step${step}`).classList.remove('active');
+            
+            // Show next step
+            const nextStep = step + 1;
+            document.getElementById(`step${nextStep}Content`).style.display = 'block';
+            document.getElementById(`step${nextStep}`).classList.add('active');
+            currentStep = nextStep;
+
+            if (nextStep === 5) {
+                updateOrderSummary();
+            }
+        }
+
+        function prevStep(step) {
+            // Hide current step
+            document.getElementById(`step${step}Content`).style.display = 'none';
+            document.getElementById(`step${step}`).classList.remove('active');
+            
+            // Show previous step
+            const prevStep = step - 1;
+            document.getElementById(`step${prevStep}Content`).style.display = 'block';
+            document.getElementById(`step${prevStep}`).classList.add('active');
+            currentStep = prevStep;
+        }
+
+        function updateOrderSummary() {
+            const summary = document.getElementById('orderSummary');
+            const total = calculateTotal();
+            
+            summary.innerHTML = `
+                <div style="background: #f8f9fa; padding: 20px; border-radius: 8px;">
+                    <h4>Your Pizza:</h4>
+                    <p><strong>Base:</strong> ${pizzaOrder.base?.name}</p>
+                    <p><strong>Sauce:</strong> ${pizzaOrder.sauce?.name}</p>
+                    <p><strong>Cheese:</strong> ${pizzaOrder.cheese?.name}</p>
+                    <p><strong>Veggies:</strong> ${pizzaOrder.veggies.map(v => v.name).join(', ')}</p>
+                    <hr>
+                    <h3>Total: ₹${total}</h3>
+                </div>
+            `;
+        }
+
+        function calculateTotal() {
+            let total = 199; // Base price
+            if (pizzaOrder.base) total += 50;
+            if (pizzaOrder.sauce) total += 30;
+            if (pizzaOrder.cheese) total += 40;
+            total += pizzaOrder.veggies.length * 20;
+            return total;
+        }
+
+        function processPayment() {
+            // Simulate Razorpay payment
+            const options = {
+                key: 'rzp_test_123456', // Test key
+                amount: calculateTotal() * 100, // Amount in paise
+                currency: 'INR',
+                name: 'Pizza Craft',
+                description: 'Custom Pizza Order',
+                handler: function(response) {
+                    // Payment successful
+                    placeOrder();
+                },
+                prefill: {
+                    name: currentUser.name,
+                    email: currentUser.email
+                },
+                theme: {
+                    color: '#764ba2'
+                }
+            };
+
+            // In real app, this would open Razorpay
+            if (confirm(`Simulate payment of ₹${calculateTotal()}? Click OK to proceed.`)) {
+                placeOrder();
+            }
+        }
+
+        function placeOrder() {
+            // Update inventory
+            updateInventory();
+
+            // Create order
+            const order = {
+                id: orders.length + 1,
+                userId: currentUser.id,
+                userName: currentUser.name,
+                pizza: { ...pizzaOrder },
+                total: calculateTotal(),
+                status: 'Order Received',
+                statusClass: 'status-received',
+                timestamp: new Date().toISOString()
+            };
+
+            orders.push(order);
+            saveToLocalStorage();
+
+            // Reset pizza builder
+            pizzaOrder = {
+                base: null,
+                sauce: null,
+                cheese: null,
+                veggies: []
+            };
+            currentStep = 1;
+
+            // Show success
+            showNotification('Order placed successfully!');
+            
+            // Reset view
+            document.getElementById('step5Content').style.display = 'none';
+            document.getElementById('step1Content').style.display = 'block';
+            document.getElementById('step1').classList.add('active');
+            document.getElementById('step5').classList.remove('active');
+
+            // Reload data
+            loadUserOrders();
+            loadPizzaOptions();
+            
+            // Check low stock
+            checkLowStock();
+        }
+
+        function updateInventory() {
+            // Decrease stock for selected items
+            if (pizzaOrder.base) {
+                const base = inventory.bases.find(b => b.id === pizzaOrder.base.id);
+                base.stock--;
+            }
+            
+            if (pizzaOrder.sauce) {
+                const sauce = inventory.sauces.find(s => s.id === pizzaOrder.sauce.id);
+                sauce.stock--;
+            }
+            
+            if (pizzaOrder.cheese) {
+                const cheese = inventory.cheeses.find(c => c.id === pizzaOrder.cheese.id);
+                cheese.stock--;
+            }
+            
+            pizzaOrder.veggies.forEach(veggie => {
+                const v = inventory.veggies.find(v => v.id === veggie.id);
+                v.stock--;
+            });
+
+            saveToLocalStorage();
+        }
+
+        // Load user orders
+        function loadUserOrders() {
+            const userOrders = orders.filter(o => o.userId === currentUser?.id);
+            const container = document.getElementById('userOrders');
+            
+            if (userOrders.length === 0) {
+                container.innerHTML = '<p>No orders yet.</p>';
+                return;
+            }
+
+            container.innerHTML = userOrders.map(order => `
+                <div class="order-card">
+                    <div class="order-header">
+                        <h4>Order #${order.id}</h4>
+                        <span class="order-status ${order.statusClass}">${order.status}</span>
+                    </div>
+                    <p><strong>Pizza:</strong> ${order.pizza.base.name} base, ${order.pizza.sauce.name} sauce, ${order.pizza.cheese.name} cheese</p>
+                    <p><strong>Veggies:</strong> ${order.pizza.veggies.map(v => v.name).join(', ')}</p>
+                    <p><strong>Total:</strong> ₹${order.total}</p>
+                    <p><strong>Ordered:</strong> ${new Date(order.timestamp).toLocaleString()}</p>
+                </div>
+            `).join('');
+        }
+
+        // Admin Functions
+        function loadInventory() {
+            const grid = document.getElementById('inventoryGrid');
+            
+            grid.innerHTML = `
+                <div class="inventory-card">
+                    <h3>Pizza Bases</h3>
+                    ${inventory.bases.map(item => `
+                        <div class="inventory-item ${item.stock <= item.threshold ? 'low-stock' : ''}">
+                            <span>${item.name}</span>
+                            <span>${item.stock} ${item.stock <= item.threshold ? '<span class="threshold-badge">Low</span>' : ''}</span>
+                        </div>
+                    `).join('')}
+                </div>
+                <div class="inventory-card">
+                    <h3>Sauces</h3>
+                    ${inventory.sauces.map(item => `
+                        <div class="inventory-item ${item.stock <= item.threshold ? 'low-stock' : ''}">
+                            <span>${item.name}</span>
+                            <span>${item.stock} ${item.stock <= item.threshold ? '<span class="threshold-badge">Low</span>' : ''}</span>
+                        </div>
+                    `).join('')}
+                </div>
+                <div class="inventory-card">
+                    <h3>Cheeses</h3>
+                    ${inventory.cheeses.map(item => `
+                        <div class="inventory-item ${item.stock <= item.threshold ? 'low-stock' : ''}">
+                            <span>${item.name}</span>
+                            <span>${item.stock} ${item.stock <= item.threshold ? '<span class="threshold-badge">Low</span>' : ''}</span>
+                        </div>
+                    `).join('')}
+                </div>
+                <div class="inventory-card">
+                    <h3>Veggies</h3>
+                    ${inventory.veggies.map(item => `
+                        <div class="inventory-item ${item.stock <= item.threshold ? 'low-stock' : ''}">
+                            <span>${item.name}</span>
+                            <span>${item.stock} ${item.stock <= item.threshold ? '<span class="threshold-badge">Low</span>' : ''}</span>
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+        }
+
+        function loadAdminOrders() {
+            const container = document.getElementById('adminOrders');
+            
+            if (orders.length === 0) {
+                container.innerHTML = '<p>No orders yet.</p>';
+                return;
+            }
+
+            container.innerHTML = orders.map(order => `
+                <div class="order-card">
+                    <div class="order-header">
+                        <h4>Order #${order.id} - ${order.userName}</h4>
+                        <select class="status-select" onchange="updateOrderStatus(${order.id}, this.value)">
+                            <option value="Order Received" ${order.status === 'Order Received' ? 'selected' : ''}>Order Received</option>
+                            <option value="In Kitchen" ${order.status === 'In Kitchen' ? 'selected' : ''}>In Kitchen</option>
+                            <option value="Sent to Delivery" ${order.status === 'Sent to Delivery' ? 'selected' : ''}>Sent to Delivery</option>
+                        </select>
+                    </div>
+                    <p><strong>Pizza:</strong> ${order.pizza.base.name} base, ${order.pizza.sauce.name} sauce, ${order.pizza.cheese.name} cheese</p>
+                    <p><strong>Veggies:</strong> ${order.pizza.veggies.map(v => v.name).join(', ')}</p>
+                    <p><strong>Total:</strong> ₹${order.total}</p>
+                    <p><strong>Ordered:</strong> ${new Date(order.timestamp).toLocaleString()}</p>
+                </div>
+            `).join('');
+        }
+
+        function updateOrderStatus(orderId, newStatus) {
+            const order = orders.find(o => o.id === orderId);
+            if (order) {
+                order.status = newStatus;
+                order.statusClass = newStatus.toLowerCase().replace(/ /g, '-');
+                saveToLocalStorage();
+                loadAdminOrders();
+                loadUserOrders();
+                showNotification(`Order #${orderId} status updated to ${newStatus}`);
+            }
+        }
+
+        // Initialize
+        window.onload = function() {
+            saveToLocalStorage();
+            checkLowStock();
+            
+            // Add some demo data
+            if (orders.length === 0) {
+                const demoOrder = {
+                    id: 1,
+                    userId: 1,
+                    userName: 'Admin User',
+                    pizza: {
+                        base: inventory.bases[0],
+                        sauce: inventory.sauces[0],
+                        cheese: inventory.cheeses[0],
+                        veggies: [inventory.veggies[0], inventory.veggies[1]]
+                    },
+                    total: 339,
+                    status: 'Order Received',
+                    statusClass: 'status-received',
+                    timestamp: new Date().toISOString()
+                };
+                orders.push(demoOrder);
+                saveToLocalStorage();
+            }
+        };
+    </script>
+</body>
+</html>
