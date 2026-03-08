@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Priyanka Chopra · Self Development · #GlobalDomination</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Georgia', 'Times New Roman', serif;
+            background: linear-gradient(135deg, #667b8d 0%, #4a5f73 100%);
+            color: #2c3e4f;
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 30px 20px;
+        }
+
+        .container {
+            max-width: 1100px;
+            width: 100%;
+            background: #faf7f2;
+            border-radius: 12px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+            padding: 40px;
+        }
+
+        /* Header Section - similar to reference image */
+        .header {
+            text-align: left;
+            margin-bottom: 40px;
+            border-bottom: 2px solid #c0a98b;
+            padding-bottom: 20px;
+        }
+
+        .header h1 {
+            font-size: 64px;
+            font-weight: 400;
+            font-family: 'Playfair Display', 'Georgia', serif;
+            color: #2c3e4f;
+            letter-spacing: 1px;
+            line-height: 1.2;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .header h2 {
+            font-size: 22px;
+            font-weight: 300;
+            font-family: 'Montserrat', 'Arial', sans-serif;
+            color: #8e6b4f;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            word-spacing: 5px;
+        }
+
+        .global-tag {
+            margin-top: 15px;
+            font-size: 28px;
+            font-family: 'Impact', 'Arial Black', sans-serif;
+            color: #9e5f3a;
+            background: #f0e4d8;
+            display: inline-block;
+            padding: 8px 20px;
+            border-radius: 40px;
+            letter-spacing: 2px;
+            border: 2px dashed #c48a5b;
+        }
+
+        /* Image Gallery Grid */
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+            margin: 40px 0;
+        }
+
+        .gallery-item {
+            background: #e8d9cc;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(92, 67, 49, 0.2);
+            transition: transform 0.3s;
+        }
+
+        .gallery-item:hover {
+            transform: translateY(-5px);
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 280px;
+            object-fit: cover;
+            display: block;
+            border-bottom: 3px solid #b58b6c;
+        }
+
+        .gallery-item p {
+            padding: 15px;
+            text-align: center;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 500;
+            color: #4a3a2e;
+            background: #f5ede5;
+        }
+
+        /* Biography / Main Content Section */
+        .bio-section {
+            margin: 50px 0 30px;
+            background: #f0e9e2;
+            padding: 35px;
+            border-radius: 12px;
+            border-left: 8px solid #9e6e4e;
+        }
+
+        .bio-section h3 {
+            font-size: 36px;
+            font-family: 'Playfair Display', serif;
+            color: #2c3e4f;
+            margin-bottom: 20px;
+            font-weight: 400;
+            border-bottom: 1px solid #c7af9a;
+            padding-bottom: 10px;
+        }
+
+        .bio-section p {
+            margin-bottom: 20px;
+            font-size: 18px;
+            color: #3e3a37;
+        }
+
+        .bio-section strong {
+            color: #a1592b;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+        }
+
+        .quote {
+            font-size: 24px;
+            font-style: italic;
+            font-family: 'Courier New', monospace;
+            background: #ffffffc9;
+            padding: 25px;
+            border-radius: 50px 50px 50px 10px;
+            margin: 30px 0;
+            color: #4f3627;
+            border: 2px solid #c79f82;
+            box-shadow: 8px 8px 0 #8b6248;
+        }
+
+        .quote span {
+            font-size: 48px;
+            color: #b2612e;
+            font-family: serif;
+        }
+
+        /* Three Column Section */
+        .features {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+            margin: 40px 0;
+        }
+
+        .feature-card {
+            background: #e4d4c4;
+            padding: 30px 20px;
+            border-radius: 12px;
+            text-align: center;
+            border: 2px solid #c5a387;
+            transition: 0.3s;
+        }
+
+        .feature-card:nth-child(1) { background: #dbcdbe; }
+        .feature-card:nth-child(2) { background: #d5c4b2; }
+        .feature-card:nth-child(3) { background: #cfbaa6; }
+
+        .feature-card:hover {
+            background: #c9b09b;
+            border-color: #975f3e;
+        }
+
+        .feature-card h4 {
+            font-size: 28px;
+            margin-bottom: 15px;
+            font-family: 'Arial Black', sans-serif;
+            color: #4b3629;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .feature-card p {
+            font-size: 17px;
+            color: #2f2a26;
+            font-family: 'Verdana', sans-serif;
+            line-height: 1.7;
+        }
+
+        .feature-card:first-child p {
+            font-family: 'Georgia', serif;
+            font-style: italic;
+        }
+
+        .feature-card:last-child p {
+            font-family: 'Courier New', monospace;
+            font-weight: 600;
+        }
+
+        /* Global Domination Banner */
+        .global-banner {
+            background: #33485d;
+            color: #f3e3d7;
+            padding: 30px;
+            text-align: center;
+            border-radius: 100px 100px 20px 20px;
+            margin: 40px 0 20px;
+            border: 3px solid #e1b494;
+        }
+
+        .global-banner p {
+            font-size: 42px;
+            font-weight: 800;
+            font-family: 'Impact', 'Arial Black', sans-serif;
+            letter-spacing: 5px;
+            word-spacing: 15px;
+            text-transform: uppercase;
+            color: #fadbc4;
+            text-shadow: 3px 3px 0 #21303b;
+        }
+
+        .global-banner small {
+            font-size: 18px;
+            font-family: 'Brush Script MT', cursive;
+            color: #ffd5b3;
+            display: block;
+            margin-top: 10px;
+        }
+
+        /* Footer */
+        .footer {
+            text-align: right;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 2px solid #b79478;
+            font-family: 'Comic Sans MS', cursive;
+            color: #6e4e38;
+            font-size: 20px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 900px) {
+            .gallery, .features {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .header h1 {
+                font-size: 48px;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .gallery, .features {
+                grid-template-columns: 1fr;
+            }
+            .container {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header: exactly like your reference image style -->
+        <div class="header">
+            <h1>Priyanka Chopra Jonas</h1>
+            <h2>The Blueprint for Growth • Global Icon • Fearless</h2>
+            <div class="global-tag">#GLOBAL DOMINATION</div>
+        </div>
+
+        <!-- Image Gallery - 3 photos (using Unsplash images) -->
+        <div class="gallery">
+            <div class="gallery-item">
+                <img src="https://mn2s.com/wp-content/uploads/2025/02/Priyanka-Chopra.png">
+                <p>✨ The Vision</p>
+            </div>
+            <div class="gallery-item">
+                <img src="https://d2lnbwhcsmj8tp.cloudfront.net/ianslive_watermark/202511173578065.jpg">
+                <p>🎤 The Voice</p>
+            </div>
+            <div class="gallery-item">
+                
+                <img src="https://i.scdn.co/image/ab6761610000e5eb6d087edcae8ec267f8923200">
+                <p>🌍 Global Force</p>
+            </div>
+        </div>
+
+        <!-- Biography / Main tribute section - like your reference -->
+        <div class="bio-section">
+            <h3>Why I Admire Her</h3>
+            
+            <p><strong>✦ Self Development Above All ✦</strong> — Priyanka Chopra isn't just a star; she's a masterclass in constant evolution. From winning Miss World at 18 to becoming a Bollywood lead, then conquering Hollywood, producing content, and launching her own haircare line — she never stops growing. She once said, "I don't fit into a box, and I never will." That's the energy I carry with me every day.</p>
+            
+            <div class="quote">
+                <span>“</span> I refused to be intimidated by anything I didn't know. <span>”</span>
+            </div>
+            
+            <p><strong>✦ The Way She Speaks ✦</strong> — Have you watched any of her interviews or speeches? She commands every room with grace, wit, and a razor-sharp mind. Her words are deliberate, warm, and empowering. She articulates ambition like it's poetry, making you feel that your dreams aren't just possible — they're inevitable. I learn communication just by observing her.</p>
+            
+            <p><strong>✦ #GlobalDomination Mindset ✦</strong> — For Priyanka, #GlobalDomination isn't about ruling others — it's about ruling your own potential. Breaking boundaries, embracing every identity (Indian, international, actor, producer, wife, activist), and never shrinking. She taught me that you can have it all if you're willing to work for it unapologetically.</p>
+        </div>
+
+        <!-- Three pillar cards with different fonts/colors - expanded tribute -->
+        <div class="features">
+            <div class="feature-card">
+                <h4>Self-Development</h4>
+                <p>She reinvented herself across continents. Her mantra: "Every time I feel uncomfortable, I know I'm growing." I apply this daily — learning, unlearning, leveling up.</p>
+            </div>
+            <div class="feature-card">
+                <h4>Her Voice</h4>
+                <p>Eloquent, fearless, and authentic. She speaks with such clarity that her words become action points. I aspire to communicate with that same power.</p>
+            </div>
+            <div class="feature-card">
+                <h4>Global Domination</h4>
+                <p>Not conquest — but expansion. She owns her narrative across borders. She whispers to every girl: "The world is yours. Take up space."</p>
+            </div>
+        </div>
+
+        <!-- Global domination banner (big statement) -->
+        <div class="global-banner">
+            <p>#GLOBAL DOMINATION</p>
+            <small>— the mindset that changed everything for me —</small>
+        </div>
+
+        <!-- Extra paragraph with different style (like in your reference image's long bio) -->
+        <div style="background: #f9f1e9; padding: 25px; border-radius: 12px; margin: 30px 0; font-family: 'Trebuchet MS', sans-serif; border: 1px solid #b88d6e;">
+            <p style="font-size: 18px;"><strong>📌 What I've Learned From Her:</strong> Priyanka's journey taught me that self-development is a lifelong commitment. She didn't wait for permission — she created her own opportunities. When she moved to America, she started from scratch, took acting classes, knocked on doors. That resilience inspires me to face my own challenges head-on. She embodies the idea that you can be both ambitious and kind, both successful and grounded.</p>
+        </div>
+
+        <!-- Footer - personal note -->
+        <div class="footer">
+            — designed with admiration · for Priyanka, my self-development icon 💫
+        </div>
+    </div>
+</body>
+</html>
