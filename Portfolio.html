@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lalitha Supriya · product & dev portfolio</title>
+    <!-- Font Awesome for icons (used in original and gif style) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #0c0f15;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            color: #eaeef2;
+            line-height: 1.5;
+        }
+
+        /* subtle grain / dark texture */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-image: radial-gradient(rgba(255,255,255,0.02) 1px, transparent 1px);
+            background-size: 40px 40px;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 30px;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* ----- header / nav (clean, simple) ----- */
+        header {
+            padding: 32px 0 20px;
+            border-bottom: 1px solid rgba(200, 200, 220, 0.08);
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 400;
+            letter-spacing: -0.01em;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 500;
+            color: white;
+            text-decoration: none;
+            border-right: 2px solid #4f8cf6;
+            padding-right: 20px;
+        }
+
+        .nav-links a {
+            color: #b0b8c5;
+            text-decoration: none;
+            margin-left: 40px;
+            font-size: 1.1rem;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover {
+            color: white;
+        }
+
+        /* ----- titles / sections (gif style) ----- */
+        h2 {
+            font-size: 2.2rem;
+            font-weight: 450;
+            margin: 60px 0 30px;
+            letter-spacing: -0.02em;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            padding-bottom: 20px;
+        }
+
+        h2 i {
+            color: #5f7ef2;
+            font-size: 2rem;
+        }
+
+        h3 {
+            font-size: 1.5rem;
+            font-weight: 450;
+            margin: 25px 0 10px;
+            color: #e0e7ff;
+        }
+
+        /* intro card (gif style: image placeholder, story) */
+        .intro-card {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 50px;
+            background: rgba(20, 25, 36, 0.6);
+            backdrop-filter: blur(4px);
+            border-radius: 32px;
+            padding: 40px;
+            margin-top: 30px;
+            border: 1px solid rgba(90, 120, 255, 0.2);
+        }
+
+        .avatar-placeholder {
+            background: linear-gradient(135deg, #2c3a6b, #1f2940);
+            border-radius: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 280px;
+            color: #b3c7ff;
+            font-size: 1.4rem;
+            font-weight: 300;
+            border: 1px solid #3b4b78;
+            box-shadow: 0 20px 30px -10px rgba(0,0,0,0.7);
+        }
+
+        .intro-text p {
+            color: #cbd5e1;
+            margin-bottom: 20px;
+            font-size: 1.1rem;
+        }
+
+        .my-story-link {
+            display: inline-block;
+            margin-top: 15px;
+            color: #92abff;
+            text-decoration: none;
+            border-bottom: 1px dashed #5f7ef2;
+            padding-bottom: 3px;
+        }
+
+        /* contact row (gif style) */
+        .contact-block {
+            background: rgba(15, 20, 30, 0.8);
+            border-radius: 28px;
+            padding: 40px;
+            border: 1px solid #2d374b;
+            margin: 50px 0;
+        }
+
+        .contact-title {
+            font-size: 1.8rem;
+            font-weight: 400;
+            margin-bottom: 10px;
+        }
+
+        .contact-title span {
+            color: #7d9aff;
+        }
+
+        .contact-desc {
+            color: #b1c3df;
+            font-size: 1.05rem;
+            max-width: 700px;
+            margin: 20px 0 20px;
+        }
+
+        .contact-link {
+            display: inline-block;
+            background: #1e2a47;
+            padding: 14px 42px;
+            border-radius: 50px;
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            border: 1px solid #4f6bb0;
+            transition: 0.2s;
+            margin: 20px 0 10px;
+        }
+
+        .contact-link:hover {
+            background: #2c3e6b;
+        }
+
+        /* featured clients & stats (gif style) */
+        .stats-grid {
+            display: flex;
+            gap: 60px;
+            margin: 40px 0 50px;
+        }
+
+        .stat-item {
+            border-left: 3px solid #4f8cf6;
+            padding-left: 25px;
+        }
+
+        .stat-number {
+            font-size: 2.8rem;
+            font-weight: 350;
+            color: white;
+            line-height: 1.1;
+        }
+
+        .stat-label {
+            color: #8f9fc0;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 0.9rem;
+        }
+
+        /* role boxes (product designer / full stack) */
+        .roles-row {
+            display: flex;
+            gap: 30px;
+            margin: 50px 0;
+        }
+
+        .role-card {
+            flex: 1;
+            background: #141b29;
+            border-radius: 24px;
+            padding: 30px;
+            border: 1px solid #29334f;
+        }
+
+        .role-title {
+            font-size: 1.8rem;
+            font-weight: 400;
+            color: white;
+            margin-bottom: 20px;
+        }
+
+        .role-meta {
+            color: #7f93c7;
+            font-size: 1.2rem;
+        }
+
+        .project-count {
+            font-size: 2rem;
+            color: #d1defa;
+        }
+
+        /* BeServer / features (like gif) */
+        .beserver-section {
+            background: #0f1623;
+            border-radius: 30px;
+            padding: 40px;
+            border: 1px solid #2b3855;
+            margin: 60px 0;
+        }
+
+        .beserver-title {
+            font-size: 2.4rem;
+            font-weight: 300;
+            margin-bottom: 40px;
+        }
+
+        .features-list {
+            list-style: none;
+        }
+
+        .features-list li {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 20px 0;
+            border-bottom: 1px solid #263249;
+            font-size: 1.4rem;
+            font-weight: 350;
+        }
+
+        .features-list li:last-child {
+            border-bottom: none;
+        }
+
+        .explore-link {
+            color: #a0b9ff;
+            text-decoration: none;
+            font-size: 1rem;
+            background: #1e2b42;
+            padding: 6px 20px;
+            border-radius: 30px;
+            border: 1px solid #466093;
+        }
+
+        /* project cards (from original) + tweaks */
+        .projects-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+            margin: 50px 0;
+        }
+
+        .project-card {
+            background: #131b2b;
+            border-radius: 24px;
+            overflow: hidden;
+            border: 1px solid #2a3453;
+            transition: 0.2s;
+        }
+
+        .project-card:hover {
+            border-color: #5f7ef2;
+        }
+
+        .project-image {
+            height: 180px;
+            background: #1f2a41;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #9bb1e6;
+            font-size: 2rem;
+            font-weight: 300;
+        }
+
+        .project-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .project-content {
+            padding: 25px;
+        }
+
+        .project-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin: 15px 0;
+        }
+
+        .project-tag {
+            background: #1d2a44;
+            color: #b8cdff;
+            padding: 4px 14px;
+            border-radius: 30px;
+            font-size: 0.8rem;
+        }
+
+        /* timeline minimal */
+        .timeline {
+            margin: 60px 0;
+        }
+        .timeline-item {
+            border-left: 2px solid #35538f;
+            padding-left: 30px;
+            margin-bottom: 40px;
+        }
+        .timeline-date {
+            color: #7f9cf5;
+            font-family: monospace;
+            font-size: 1rem;
+        }
+
+        /* footer */
+        footer {
+            border-top: 1px solid #20293f;
+            padding: 50px 0 40px;
+            margin-top: 80px;
+            color: #94a3c7;
+        }
+
+        /* responsive */
+        @media (max-width: 800px) {
+            .intro-card { grid-template-columns: 1fr; }
+            .stats-grid { flex-direction: column; gap: 25px; }
+            .roles-row { flex-direction: column; }
+            .nav-links a { margin-left: 20px; font-size: 0.95rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+
+        <!-- header exactly like gif: Carlos Mendoza -> my name -->
+        <header>
+            <div class="navbar">
+                <a href="#" class="logo">Lalitha Supriya</a>
+                <div class="nav-links">
+                    <a href="#">Services</a>
+                    <a href="#">Works</a>
+                    <a href="#">Blog</a>
+                </div>
+            </div>
+        </header>
+
+        <!-- - Introduction (gif style) with avatar and story -->
+        <h2><i class="fa-regular fa-star"></i> Introduction</h2>
+        <div class="intro-card">
+            <div class="avatar-placeholder">
+                <i class="fa-regular fa-user" style="font-size: 4rem; opacity: 0.7;"></i>
+                <!-- you can replace with an image later -->
+            </div>
+            <div class="intro-text">
+                <p style="font-size: 1.6rem; font-weight: 300; margin-bottom: 0.2rem;">Product Designer & Developer</p>
+                <p><span style="color: #b7c9ff;">I'm a passionate developer of experience in building web applications. I specialize in creating responsive, user-friendly interfaces and robust back-end systems.
+                    My journey started with Electronics and Communication degree and has evolved through working on diverse projects ranging from small business websites to large-scale applications.
+                    When I'm not coding,I can find myself in exploring new Books, Practising in YOGA and Self-Development.
+                    As a full-stack developer, I have expertise in developing responsive and dynamic web applications using HTML5, CSS3, and JavaScript. I'm proficient in frontend frameworks like Bootstrap, Tailwind CSS, React JS, and Angular JS. On the backend, I have experience with Node JS and SQL. I'm also skilled in version control systems like Git and GitHub. Currently, I'm expanding my knowledge in data structures and algorithms (DSA) in C+ + and object-oriented programming (OOP) concepts
+</span></p>
+                <a href="#" class="my-story-link">[My story]</a>
+            </div>
+        </div>
+
+        <!-- - Contact block (gif style) -->
+        <div class="contact-block">
+            <div class="contact-title">- <span>Contact</span></div>
+            <h3 style="font-size: 2rem; margin: 10px 0 0;">Any Type Of Query & Discussion.</h3>
+            <p class="contact-desc">
+                Creating digital experiences that are both beautiful and functional. Let's build something amazing together
+            </p>
+            <a href="https://lalithasupriyakatakam.github.io/my-portfolio/" class="contact-link" target="_blank">Nexcorros.com</a>
+            <!-- in gif they had Nexcorros.com, but we point to your actual portfolio -->
+        </div>
+
+        <!-- - Featured Clients + stats -->
+        <h2><i class="fa-regular fa-star"></i> Featured Clients</h2>
+        <div class="stats-grid">
+            <div class="stat-item">
+                <div class="stat-number">14+</div>
+                <div class="stat-label">Years of Experience</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">187</div>
+                <div class="stat-label">Satisfied Clients</div>
+            </div>
+        </div>
+
+        <!-- Product Designer & Full Stack (two column) -->
+        <div class="roles-row">
+            <div class="role-card">
+                <div class="role-title">- Product Designer</div>
+                <div class="role-meta">Branding Designer.</div>
+                <div class="project-count">37 Projects</div>
+            </div>
+            <div class="role-card">
+                <div class="role-title">- Full Stack Developer</div>
+                <div class="role-meta">React • Node • C++</div>
+                <div class="project-count">42 Projects</div>
+            </div>
+        </div>
+
+        <!-- BeServer / awesome features (exactly like gif) -->
+        <div class="beserver-section">
+            <div class="beserver-title">- BeServer</div>
+            <h3 style="font-size: 2rem; font-weight: 350; margin-top: -15px;">Awesome Features</h3>
+            <ul class="features-list">
+                <li>
+                    <span>Energetic Tumbler.</span>
+                    <a href="#" class="explore-link">Explore More</a>
+                </li>
+                <li>
+                    <span>Energy Efficient Tumbler.</span>
+                    <a href="#" class="explore-link">Explore More</a>
+                </li>
+                <li>
+                    <span>Full Stack Developer.</span>
+                    <a href="#" class="explore-link">Explore More</a>
+                </li>
+            </ul>
+        </div>
+
+        <!-- ************************************************ -->
+        <!-- below: integrate your personal content (about, skills, projects) 
+             but keep the gif aesthetic minimal, using similar blocks -->
+        <!-- ************************************************ -->
+
+        <!-- About (personal from your code) but trimmed -->
+        <h2><i class="fa-regular fa-circle-user"></i> About me</h2>
+        <div style="background: #111827; padding: 40px; border-radius: 30px; margin-bottom: 40px; border:1px solid #28344e;">
+            <p><b>I'm a passionate developer with experience in building web applications. I specialize in creating responsive, user-friendly interfaces and robust back-end systems.</b></p>
+            <p>My journey started with Electronics and Communication degree and has evolved through working on diverse projects ranging from small business websites to large-scale applications. When I'm not coding, I explore new books, practise Yoga and focus on self-development.</p>
+            <p>As a full-stack developer, I have expertise in developing responsive and dynamic web applications using HTML5, CSS3, and JavaScript. Proficient in frontend frameworks like Bootstrap, Tailwind, React, and Angular. On the backend, I work with Node.js and SQL. Skilled in Git, GitHub, DSA in C++, and OOP concepts.</p>
+        </div>
+
+        <!-- Skills (condensed, but with bars from original) we add minimal style -->
+        <h2><i class="fa-regular fa-code"></i> Technical Skills</h2>
+        <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px,1fr)); gap: 20px; margin: 40px 0;">
+            <div style="background: #131e30; border-radius: 20px; padding: 25px;">
+                <i class="fab fa-html5" style="font-size: 2.2rem; color: #ff8a5c;"></i>
+                <h4 style="margin: 15px 0 5px;">HTML</h4>
+                <div style="height:6px; background:#2a3448; border-radius:4px;"><div style="width:95%; height:6px; background:#5f7ef2; border-radius:4px;"></div></div>
+            </div>
+            <div style="background: #131e30; border-radius: 20px; padding: 25px;">
+                <i class="fab fa-css3-alt" style="font-size: 2.2rem; color: #5c9eff;"></i>
+                <h4 style="margin: 15px 0 5px;">CSS</h4>
+                <div style="height:6px; background:#2a3448; border-radius:4px;"><div style="width:90%; height:6px; background:#5f7ef2;"></div></div>
+            </div>
+            <div style="background: #131e30; border-radius: 20px; padding: 25px;">
+                <i class="fab fa-js" style="font-size: 2.2rem; color: #f7df1e;"></i>
+                <h4>JavaScript</h4>
+                <div style="height:6px; background:#2a3448;"><div style="width:88%; height:6px; background:#5f7ef2;"></div></div>
+            </div>
+            <div style="background: #131e30; border-radius: 20px; padding: 25px;">
+                <i class="fab fa-react" style="font-size: 2.2rem; color: #61dafb;"></i>
+                <h4>React</h4>
+                <div style="height:6px; background:#2a3448;"><div style="width:85%; background:#5f7ef2; height:6px;"></div></div>
+            </div>
+            <div style="background: #131e30; border-radius: 20px; padding: 25px;">
+                <i class="fa-solid fa-c"></i>
+                <h4>C++</h4>
+                <div style="height:6px; background:#2a3448;"><div style="width:82%; background:#5f7ef2; height:6px;"></div></div>
+            </div>
+        </div>
+
+        <!-- Timeline from your original, but keep minimal -->
+        <h2><i class="fa-regular fa-calendar"></i> Journey</h2>
+        <div class="timeline">
+            <div class="timeline-item">
+                <span class="timeline-date">2026 – present</span>
+                <h3>SDE Intern · Bluestock Fintech</h3>
+                <p>React, TypeScript, performance optimization.</p>
+            </div>
+            <div class="timeline-item">
+                <span class="timeline-date">2025 – 2026</span>
+                <h3>Teaching Assistant · Stealth</h3>
+                <p>Debugging, code reviews, MERN stack projects.</p>
+            </div>
+            <div class="timeline-item">
+                <span class="timeline-date">2023 – 2027</span>
+                <h3>RGUKT IIIT Srikakulam</h3>
+                <p>Computer Science • DSA, OOP, full‑stack dev.</p>
+            </div>
+        </div>
+
+        <!-- Projects (just a few cards from your list) -->
+        <h2><i class="fa-regular fa-folder-open"></i> Featured projects</h2>
+        <div class="projects-container">
+            <div class="project-card">
+                <div class="project-image"><i class="fa-solid fa-chart-line"></i> Stock clone</div>
+                <div class="project-content">
+                    <h3>Zerodha (clone)</h3>
+                    <p>HTML, CSS, Bootstrap, React, Node, MongoDB</p>
+                    <div class="project-tags"><span class="project-tag">MERN</span><span class="project-tag">trading</span></div>
+                </div>
+            </div>
+            <div class="project-card">
+                <div class="project-image"><i class="fa-solid fa-robot"></i> SigmaGPT</div>
+                <div class="project-content">
+                    <h3>ChatGPT clone</h3>
+                    <p>React, Node, OpenAI API</p>
+                    <div class="project-tags"><span class="project-tag">AI</span><span class="project-tag">Express</span></div>
+                </div>
+            </div>
+            <div class="project-card">
+                <div class="project-image"><i class="fa-solid fa-puzzle-piece"></i> Sudoku</div>
+                <div class="project-content">
+                    <h3>Sudoku solver</h3>
+                    <p>Backtracking, JavaScript</p>
+                    <div class="project-tags"><span class="project-tag">DSA</span><span class="project-tag">C++</span></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Contact info from your original (as list, but keep gif style) -->
+        <h2><i class="fa-regular fa-address-card"></i> Get in touch</h2>
+        <div style="display: flex; flex-wrap: wrap; gap: 40px; background: #0f1827; border-radius: 30px; padding: 40px; margin: 40px 0;">
+            <div style="flex:1;">
+                <div><i class="fa-regular fa-envelope" style="color:#7d9aff;"></i> lalithasupriyakatam2005@gmail.com</div>
+                <div style="margin: 20px 0;"><i class="fa-regular fa-location-dot"></i> Annavaram, Andhra Pradesh</div>
+                <div><i class="fa-regular fa-clock"></i> open for projects / internships</div>
+            </div>
+            <div style="flex:1;">
+                <a href="https://www.linkedin.com/in/lalitha-supriya-katakam-0018aa320" target="_blank" style="color:white; margin-right: 20px;"><i class="fab fa-linkedin-in"></i> LinkedIn</a>
+                <a href="#" style="color:white;"><i class="fab fa-github"></i> GitHub</a>
+            </div>
+        </div>
+
+        <!-- Footer (minimal) -->
+        <footer>
+            <p style="text-align: center;">© 2025 Lalitha Supriya Katakam. All rights reserved. Built with CSS/HTML.</p>
+        </footer>
+    </div>
+
+    <!-- small script to update year (optional) -->
+    <script>
+        // (optional) very light interactivity? keep as placeholder.
+        // no need for complex starfield, but we keep it clean.
+        document.querySelectorAll('.explore-link').forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                alert('explore feature — placeholder');
+            });
+        });
+    </script>
+
+    <!-- note: gif had [Nexcorros.com] link, I placed your github domain there, you can change to any link -->
+</body>
+</html>
